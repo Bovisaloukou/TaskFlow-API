@@ -1,0 +1,1164 @@
+openapi: 3.0.3
+info:
+  title: 'TaskFlow API API Documentation'
+  description: 'A multi-tenant task management SaaS API built with Laravel.'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+tags:
+  -
+    name: Authentication
+    description: "\nAPIs for managing authentication"
+  -
+    name: Organization
+    description: "\nAPIs for managing the current organization"
+  -
+    name: Members
+    description: "\nAPIs for managing organization members"
+  -
+    name: Invitations
+    description: "\nAPIs for managing organization invitations"
+  -
+    name: Projects
+    description: "\nAPIs for managing projects"
+  -
+    name: Tasks
+    description: "\nAPIs for managing tasks"
+  -
+    name: Comments
+    description: "\nAPIs for managing task comments"
+  -
+    name: Attachments
+    description: "\nAPIs for managing task attachments"
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'Authenticate via the <b>POST /api/v1/auth/login</b> endpoint to get a Bearer token. Include it in the Authorization header as <code>Bearer {token}</code>.'
+security:
+  -
+    default: []
+paths:
+  /api/v1/auth/register:
+    post:
+      summary: Register
+      operationId: register
+      description: 'Create a new organization and admin user.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "The user's name."
+                  example: 'John Doe'
+                email:
+                  type: string
+                  description: "The user's email."
+                  example: john@example.com
+                password:
+                  type: string
+                  description: 'Min 8 characters.'
+                  example: password123
+                organization_name:
+                  type: string
+                  description: 'The organization name.'
+                  example: 'Acme Corp'
+                password_confirmation:
+                  type: string
+                  description: 'Must match password.'
+                  example: password123
+              required:
+                - name
+                - email
+                - password
+                - organization_name
+                - password_confirmation
+      security: []
+  /api/v1/auth/login:
+    post:
+      summary: Login
+      operationId: login
+      description: 'Authenticate a user and return a token.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: "The user's email."
+                  example: john@example.com
+                password:
+                  type: string
+                  description: "The user's password."
+                  example: password123
+              required:
+                - email
+                - password
+      security: []
+  /api/v1/auth/logout:
+    post:
+      summary: Logout
+      operationId: logout
+      description: 'Revoke the current access token.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentication
+  /api/v1/auth/refresh:
+    post:
+      summary: 'Refresh Token'
+      operationId: refreshToken
+      description: 'Revoke current token and issue a new one.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentication
+  /api/v1/auth/me:
+    get:
+      summary: 'Current User'
+      operationId: currentUser
+      description: "Get the authenticated user's profile."
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Authentication
+  /api/v1/organization:
+    get:
+      summary: 'Show Organization'
+      operationId: showOrganization
+      description: "Get the current user's organization details."
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Organization
+    put:
+      summary: 'Update Organization'
+      operationId: updateOrganization
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Organization
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The organization name.'
+                  example: 'Acme Corp'
+  /api/v1/organization/members:
+    get:
+      summary: 'List Members'
+      operationId: listMembers
+      description: 'Get all members of the current organization.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Members
+  '/api/v1/organization/members/{user_id}':
+    delete:
+      summary: 'Remove Member'
+      operationId: removeMember
+      description: 'Remove a member from the organization.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Members
+    parameters:
+      -
+        in: path
+        name: user_id
+        description: 'The ID of the user.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  '/api/v1/organization/members/{user_id}/role':
+    put:
+      summary: 'Update Member Role'
+      operationId: updateMemberRole
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Members
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: string
+                  description: 'The new role.'
+                  example: manager
+              required:
+                - role
+    parameters:
+      -
+        in: path
+        name: user_id
+        description: 'The ID of the user.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  '/api/v1/invitations/{token}/accept':
+    post:
+      summary: 'Accept Invitation'
+      operationId: acceptInvitation
+      description: 'Accept an invitation using the token. This is a public endpoint.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Invitations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "The user's name."
+                  example: 'Jane Smith'
+                password:
+                  type: string
+                  description: 'Min 8 characters.'
+                  example: password123
+                password_confirmation:
+                  type: string
+                  description: 'Must match password.'
+                  example: password123
+              required:
+                - name
+                - password
+                - password_confirmation
+      security: []
+    parameters:
+      -
+        in: path
+        name: token
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/invitations:
+    get:
+      summary: 'List Invitations'
+      operationId: listInvitations
+      description: 'Get all invitations for the current organization.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Invitations
+    post:
+      summary: 'Send Invitation'
+      operationId: sendInvitation
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Invitations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'The email to invite.'
+                  example: jane@example.com
+                role:
+                  type: string
+                  description: 'The role to assign (admin, manager, user).'
+                  example: user
+              required:
+                - email
+  '/api/v1/invitations/{invitation_id}':
+    delete:
+      summary: 'Delete Invitation'
+      operationId: deleteInvitation
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Invitations
+    parameters:
+      -
+        in: path
+        name: invitation_id
+        description: 'The ID of the invitation.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  /api/v1/projects:
+    get:
+      summary: 'List Projects'
+      operationId: listProjects
+      description: 'Get a paginated list of projects.'
+      parameters:
+        -
+          in: query
+          name: status
+          description: 'Filter by status (active, archived, completed).'
+          example: active
+          required: false
+          schema:
+            type: string
+            description: 'Filter by status (active, archived, completed).'
+            example: active
+        -
+          in: query
+          name: search
+          description: 'Search by name or description.'
+          example: website
+          required: false
+          schema:
+            type: string
+            description: 'Search by name or description.'
+            example: website
+        -
+          in: query
+          name: sort_by
+          description: 'Sort by column (name, status, created_at, updated_at).'
+          example: created_at
+          required: false
+          schema:
+            type: string
+            description: 'Sort by column (name, status, created_at, updated_at).'
+            example: created_at
+        -
+          in: query
+          name: sort_dir
+          description: 'Sort direction (asc, desc).'
+          example: desc
+          required: false
+          schema:
+            type: string
+            description: 'Sort direction (asc, desc).'
+            example: desc
+        -
+          in: query
+          name: per_page
+          description: 'Items per page (max 100).'
+          example: 15
+          required: false
+          schema:
+            type: integer
+            description: 'Items per page (max 100).'
+            example: 15
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Projects
+    post:
+      summary: 'Create Project'
+      operationId: createProject
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The project name.'
+                  example: 'Website Redesign'
+                description:
+                  type: string
+                  description: 'The project description.'
+                  example: 'Redesign the company website'
+                  nullable: true
+                status:
+                  type: string
+                  description: 'The project status.'
+                  example: active
+                color:
+                  type: string
+                  description: 'Hex color code.'
+                  example: '#3498db'
+                  nullable: true
+              required:
+                - name
+  '/api/v1/projects/{id}':
+    get:
+      summary: 'Show Project'
+      operationId: showProject
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Projects
+    put:
+      summary: 'Update Project'
+      operationId: updateProject
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Projects
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The project name.'
+                  example: 'Website Redesign v2'
+                description:
+                  type: string
+                  description: 'The project description.'
+                  example: 'Eius et animi quos velit et.'
+                  nullable: true
+                status:
+                  type: string
+                  description: 'The project status.'
+                  example: completed
+                color:
+                  type: string
+                  description: 'Hex color code.'
+                  example: '#e74c3c'
+                  nullable: true
+    delete:
+      summary: 'Delete Project'
+      operationId: deleteProject
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Projects
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the project.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  '/api/v1/projects/{project_id}/tasks':
+    get:
+      summary: 'List Tasks (within project)'
+      operationId: listTaskswithinProject
+      description: ''
+      parameters:
+        -
+          in: query
+          name: status
+          description: 'Filter by status.'
+          example: todo
+          required: false
+          schema:
+            type: string
+            description: 'Filter by status.'
+            example: todo
+        -
+          in: query
+          name: priority
+          description: 'Filter by priority.'
+          example: high
+          required: false
+          schema:
+            type: string
+            description: 'Filter by priority.'
+            example: high
+        -
+          in: query
+          name: assigned_to
+          description: 'Filter by assignee user ID.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Filter by assignee user ID.'
+            example: 1
+        -
+          in: query
+          name: due_before
+          description: 'Filter tasks due before date.'
+          example: '2026-12-31'
+          required: false
+          schema:
+            type: string
+            description: 'Filter tasks due before date.'
+            example: '2026-12-31'
+        -
+          in: query
+          name: due_after
+          description: 'Filter tasks due after date.'
+          example: '2026-01-01'
+          required: false
+          schema:
+            type: string
+            description: 'Filter tasks due after date.'
+            example: '2026-01-01'
+        -
+          in: query
+          name: search
+          description: 'Search title and description.'
+          example: homepage
+          required: false
+          schema:
+            type: string
+            description: 'Search title and description.'
+            example: homepage
+        -
+          in: query
+          name: sort_by
+          description: 'Sort column.'
+          example: priority
+          required: false
+          schema:
+            type: string
+            description: 'Sort column.'
+            example: priority
+        -
+          in: query
+          name: sort_dir
+          description: 'Sort direction.'
+          example: desc
+          required: false
+          schema:
+            type: string
+            description: 'Sort direction.'
+            example: desc
+        -
+          in: query
+          name: per_page
+          description: 'Items per page.'
+          example: 15
+          required: false
+          schema:
+            type: integer
+            description: 'Items per page.'
+            example: 15
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Tasks
+    post:
+      summary: 'Create Task'
+      operationId: createTask
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 'The task title.'
+                  example: 'Design homepage'
+                description:
+                  type: string
+                  description: 'The task description.'
+                  example: 'Eius et animi quos velit et.'
+                  nullable: true
+                status:
+                  type: string
+                  description: 'The task status.'
+                  example: todo
+                priority:
+                  type: string
+                  description: 'The task priority.'
+                  example: high
+                assigned_to:
+                  type: integer
+                  description: 'The assignee user ID.'
+                  example: 1
+                  nullable: true
+                parent_task_id:
+                  type: integer
+                  description: 'Parent task ID for subtasks.'
+                  example: 16
+                  nullable: true
+                due_date:
+                  type: string
+                  description: 'Due date (Y-m-d).'
+                  example: '2026-03-15'
+                  nullable: true
+                position:
+                  type: integer
+                  description: 'Sort position.'
+                  example: 0
+              required:
+                - title
+    parameters:
+      -
+        in: path
+        name: project_id
+        description: 'The ID of the project.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  '/api/v1/projects/{project_id}/tasks/{id}':
+    get:
+      summary: 'Show Task'
+      operationId: showTask
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Tasks
+    put:
+      summary: 'Update Task'
+      operationId: updateTask
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Tasks
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                description:
+                  type: string
+                  description: ''
+                  example: 'Eius et animi quos velit et.'
+                  nullable: true
+                status:
+                  type: string
+                  description: ''
+                  example: done
+                  enum:
+                    - todo
+                    - in_progress
+                    - in_review
+                    - done
+                    - cancelled
+                priority:
+                  type: string
+                  description: ''
+                  example: high
+                  enum:
+                    - low
+                    - medium
+                    - high
+                    - urgent
+                assigned_to:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the users table.'
+                  example: null
+                  nullable: true
+                parent_task_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the tasks table.'
+                  example: null
+                  nullable: true
+                due_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-02-23T15:18:27'
+                  nullable: true
+                position:
+                  type: integer
+                  description: 'Must be at least 0.'
+                  example: 60
+    delete:
+      summary: 'Delete Task'
+      operationId: deleteTask
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Tasks
+    parameters:
+      -
+        in: path
+        name: project_id
+        description: 'The ID of the project.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: id
+        description: 'The ID of the task.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  /api/v1/tasks:
+    get:
+      summary: 'All Tasks (cross-project)'
+      operationId: allTaskscrossProject
+      description: 'Get all tasks across all projects in the organization.'
+      parameters:
+        -
+          in: query
+          name: status
+          description: 'Filter by status.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Filter by status.'
+            example: architecto
+        -
+          in: query
+          name: priority
+          description: 'Filter by priority.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Filter by priority.'
+            example: architecto
+        -
+          in: query
+          name: assigned_to
+          description: 'Filter by assignee.'
+          example: 16
+          required: false
+          schema:
+            type: integer
+            description: 'Filter by assignee.'
+            example: 16
+        -
+          in: query
+          name: due_before
+          description: 'Filter by due date.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Filter by due date.'
+            example: architecto
+        -
+          in: query
+          name: due_after
+          description: 'Filter by due date.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Filter by due date.'
+            example: architecto
+        -
+          in: query
+          name: search
+          description: 'Search title/description.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Search title/description.'
+            example: architecto
+        -
+          in: query
+          name: sort_by
+          description: 'Sort column.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Sort column.'
+            example: architecto
+        -
+          in: query
+          name: sort_dir
+          description: 'Sort direction.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Sort direction.'
+            example: architecto
+        -
+          in: query
+          name: per_page
+          description: 'Items per page.'
+          example: 16
+          required: false
+          schema:
+            type: integer
+            description: 'Items per page.'
+            example: 16
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Tasks
+  /api/v1/tasks/my:
+    get:
+      summary: 'My Tasks'
+      operationId: myTasks
+      description: 'Get all tasks assigned to the authenticated user.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Tasks
+  '/api/v1/tasks/{task_id}/comments':
+    get:
+      summary: 'List Comments'
+      operationId: listComments
+      description: 'Get all comments for a task.'
+      parameters:
+        -
+          in: query
+          name: per_page
+          description: 'Items per page.'
+          example: 15
+          required: false
+          schema:
+            type: integer
+            description: 'Items per page.'
+            example: 15
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Comments
+    post:
+      summary: 'Create Comment'
+      operationId: createComment
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Comments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                  description: 'The comment body.'
+                  example: 'This looks great!'
+              required:
+                - body
+    parameters:
+      -
+        in: path
+        name: task_id
+        description: 'The ID of the task.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  '/api/v1/tasks/{task_id}/comments/{id}':
+    put:
+      summary: 'Update Comment'
+      operationId: updateComment
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Comments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                  description: 'The updated comment body.'
+                  example: architecto
+              required:
+                - body
+    delete:
+      summary: 'Delete Comment'
+      operationId: deleteComment
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Comments
+    parameters:
+      -
+        in: path
+        name: task_id
+        description: 'The ID of the task.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: id
+        description: 'The ID of the comment.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  '/api/v1/tasks/{task_id}/attachments':
+    get:
+      summary: 'List Attachments'
+      operationId: listAttachments
+      description: 'Get all attachments for a task.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Attachments
+    post:
+      summary: 'Upload Attachment'
+      operationId: uploadAttachment
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Attachments
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 'The file to upload (max 10MB).'
+              required:
+                - file
+    parameters:
+      -
+        in: path
+        name: task_id
+        description: 'The ID of the task.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  '/api/v1/tasks/{task_id}/attachments/{attachment_id}':
+    get:
+      summary: 'Download Attachment'
+      operationId: downloadAttachment
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Attachments
+    delete:
+      summary: 'Delete Attachment'
+      operationId: deleteAttachment
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Attachments
+    parameters:
+      -
+        in: path
+        name: task_id
+        description: 'The ID of the task.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: attachment_id
+        description: 'The ID of the attachment.'
+        example: 16
+        required: true
+        schema:
+          type: integer

@@ -1,0 +1,1590 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost"
+        }
+    ],
+    "info": {
+        "name": "TaskFlow API API Documentation",
+        "_postman_id": "206e46bb-8ced-42b8-a0a9-4b2e2505bb23",
+        "description": "A multi-tenant task management SaaS API built with Laravel.",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Authentication",
+            "description": "\nAPIs for managing authentication",
+            "item": [
+                {
+                    "name": "Register",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"John Doe\",\"email\":\"john@example.com\",\"password\":\"password123\",\"organization_name\":\"Acme Corp\",\"password_confirmation\":\"password123\"}"
+                        },
+                        "description": "Create a new organization and admin user.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"john@example.com\",\"password\":\"password123\"}"
+                        },
+                        "description": "Authenticate a user and return a token.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Revoke the current access token."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Refresh Token",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/refresh",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/refresh"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Revoke current token and issue a new one."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Current User",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/me",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/me"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Get the authenticated user's profile."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Organization",
+            "description": "\nAPIs for managing the current organization",
+            "item": [
+                {
+                    "name": "Show Organization",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/organization",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/organization"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Get the current user's organization details."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update Organization",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/organization",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/organization"
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"Acme Corp\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Members",
+            "description": "\nAPIs for managing organization members",
+            "item": [
+                {
+                    "name": "List Members",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/organization\/members",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/organization\/members"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Get all members of the current organization."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Remove Member",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/organization\/members\/:user_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/organization\/members\/:user_id",
+                            "variable": [
+                                {
+                                    "id": "user_id",
+                                    "key": "user_id",
+                                    "value": "16",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Remove a member from the organization."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Member Role",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/organization\/members\/:user_id\/role",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/organization\/members\/:user_id\/role",
+                            "variable": [
+                                {
+                                    "id": "user_id",
+                                    "key": "user_id",
+                                    "value": "16",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"role\":\"manager\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Invitations",
+            "description": "\nAPIs for managing organization invitations",
+            "item": [
+                {
+                    "name": "Accept Invitation",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/invitations\/:token\/accept",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/invitations\/:token\/accept",
+                            "variable": [
+                                {
+                                    "id": "token",
+                                    "key": "token",
+                                    "value": "architecto",
+                                    "description": ""
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"Jane Smith\",\"password\":\"password123\",\"password_confirmation\":\"password123\"}"
+                        },
+                        "description": "Accept an invitation using the token. This is a public endpoint.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "List Invitations",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/invitations",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/invitations"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Get all invitations for the current organization."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Send Invitation",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/invitations",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/invitations"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"jane@example.com\",\"role\":\"user\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Invitation",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/invitations\/:invitation_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/invitations\/:invitation_id",
+                            "variable": [
+                                {
+                                    "id": "invitation_id",
+                                    "key": "invitation_id",
+                                    "value": "16",
+                                    "description": "The ID of the invitation."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Projects",
+            "description": "\nAPIs for managing projects",
+            "item": [
+                {
+                    "name": "List Projects",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/projects",
+                            "query": [
+                                {
+                                    "key": "status",
+                                    "value": "active",
+                                    "description": "Filter by status (active, archived, completed).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "search",
+                                    "value": "website",
+                                    "description": "Search by name or description.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort_by",
+                                    "value": "created_at",
+                                    "description": "Sort by column (name, status, created_at, updated_at).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort_dir",
+                                    "value": "desc",
+                                    "description": "Sort direction (asc, desc).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "15",
+                                    "description": "Items per page (max 100).",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/projects?status=active&search=website&sort_by=created_at&sort_dir=desc&per_page=15"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Get a paginated list of projects."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create Project",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/projects",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/projects"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"Website Redesign\",\"description\":\"Redesign the company website\",\"status\":\"active\",\"color\":\"#3498db\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Show Project",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/projects\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/projects\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "16",
+                                    "description": "The ID of the project."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update Project",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/projects\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/projects\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "16",
+                                    "description": "The ID of the project."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"Website Redesign v2\",\"description\":\"Eius et animi quos velit et.\",\"status\":\"completed\",\"color\":\"#e74c3c\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Project",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/projects\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/projects\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "16",
+                                    "description": "The ID of the project."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Tasks",
+            "description": "\nAPIs for managing tasks",
+            "item": [
+                {
+                    "name": "List Tasks (within project)",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/projects\/:project_id\/tasks",
+                            "query": [
+                                {
+                                    "key": "status",
+                                    "value": "todo",
+                                    "description": "Filter by status.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "priority",
+                                    "value": "high",
+                                    "description": "Filter by priority.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "assigned_to",
+                                    "value": "1",
+                                    "description": "Filter by assignee user ID.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "due_before",
+                                    "value": "2026-12-31",
+                                    "description": "Filter tasks due before date.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "due_after",
+                                    "value": "2026-01-01",
+                                    "description": "Filter tasks due after date.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "search",
+                                    "value": "homepage",
+                                    "description": "Search title and description.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort_by",
+                                    "value": "priority",
+                                    "description": "Sort column.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort_dir",
+                                    "value": "desc",
+                                    "description": "Sort direction.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "15",
+                                    "description": "Items per page.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/projects\/:project_id\/tasks?status=todo&priority=high&assigned_to=1&due_before=2026-12-31&due_after=2026-01-01&search=homepage&sort_by=priority&sort_dir=desc&per_page=15",
+                            "variable": [
+                                {
+                                    "id": "project_id",
+                                    "key": "project_id",
+                                    "value": "16",
+                                    "description": "The ID of the project."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create Task",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/projects\/:project_id\/tasks",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/projects\/:project_id\/tasks",
+                            "variable": [
+                                {
+                                    "id": "project_id",
+                                    "key": "project_id",
+                                    "value": "16",
+                                    "description": "The ID of the project."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"title\":\"Design homepage\",\"description\":\"Eius et animi quos velit et.\",\"status\":\"todo\",\"priority\":\"high\",\"assigned_to\":1,\"parent_task_id\":16,\"due_date\":\"2026-03-15\",\"position\":0}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Show Task",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/projects\/:project_id\/tasks\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/projects\/:project_id\/tasks\/:id",
+                            "variable": [
+                                {
+                                    "id": "project_id",
+                                    "key": "project_id",
+                                    "value": "16",
+                                    "description": "The ID of the project."
+                                },
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "16",
+                                    "description": "The ID of the task."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update Task",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/projects\/:project_id\/tasks\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/projects\/:project_id\/tasks\/:id",
+                            "variable": [
+                                {
+                                    "id": "project_id",
+                                    "key": "project_id",
+                                    "value": "16",
+                                    "description": "The ID of the project."
+                                },
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "16",
+                                    "description": "The ID of the task."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"title\":\"b\",\"description\":\"Eius et animi quos velit et.\",\"status\":\"cancelled\",\"priority\":\"urgent\",\"due_date\":\"2026-02-23T15:19:10\",\"position\":60}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Task",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/projects\/:project_id\/tasks\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/projects\/:project_id\/tasks\/:id",
+                            "variable": [
+                                {
+                                    "id": "project_id",
+                                    "key": "project_id",
+                                    "value": "16",
+                                    "description": "The ID of the project."
+                                },
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "16",
+                                    "description": "The ID of the task."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "All Tasks (cross-project)",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tasks",
+                            "query": [
+                                {
+                                    "key": "status",
+                                    "value": "architecto",
+                                    "description": "Filter by status.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "priority",
+                                    "value": "architecto",
+                                    "description": "Filter by priority.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "assigned_to",
+                                    "value": "16",
+                                    "description": "Filter by assignee.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "due_before",
+                                    "value": "architecto",
+                                    "description": "Filter by due date.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "due_after",
+                                    "value": "architecto",
+                                    "description": "Filter by due date.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "search",
+                                    "value": "architecto",
+                                    "description": "Search title\/description.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort_by",
+                                    "value": "architecto",
+                                    "description": "Sort column.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort_dir",
+                                    "value": "architecto",
+                                    "description": "Sort direction.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "16",
+                                    "description": "Items per page.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/tasks?status=architecto&priority=architecto&assigned_to=16&due_before=architecto&due_after=architecto&search=architecto&sort_by=architecto&sort_dir=architecto&per_page=16"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Get all tasks across all projects in the organization."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "My Tasks",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tasks\/my",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/tasks\/my"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Get all tasks assigned to the authenticated user."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Comments",
+            "description": "\nAPIs for managing task comments",
+            "item": [
+                {
+                    "name": "List Comments",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tasks\/:task_id\/comments",
+                            "query": [
+                                {
+                                    "key": "per_page",
+                                    "value": "15",
+                                    "description": "Items per page.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/tasks\/:task_id\/comments?per_page=15",
+                            "variable": [
+                                {
+                                    "id": "task_id",
+                                    "key": "task_id",
+                                    "value": "16",
+                                    "description": "The ID of the task."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Get all comments for a task."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create Comment",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tasks\/:task_id\/comments",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/tasks\/:task_id\/comments",
+                            "variable": [
+                                {
+                                    "id": "task_id",
+                                    "key": "task_id",
+                                    "value": "16",
+                                    "description": "The ID of the task."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"body\":\"This looks great!\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Comment",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tasks\/:task_id\/comments\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/tasks\/:task_id\/comments\/:id",
+                            "variable": [
+                                {
+                                    "id": "task_id",
+                                    "key": "task_id",
+                                    "value": "16",
+                                    "description": "The ID of the task."
+                                },
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "16",
+                                    "description": "The ID of the comment."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"body\":\"architecto\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Comment",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tasks\/:task_id\/comments\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/tasks\/:task_id\/comments\/:id",
+                            "variable": [
+                                {
+                                    "id": "task_id",
+                                    "key": "task_id",
+                                    "value": "16",
+                                    "description": "The ID of the task."
+                                },
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "16",
+                                    "description": "The ID of the comment."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Attachments",
+            "description": "\nAPIs for managing task attachments",
+            "item": [
+                {
+                    "name": "List Attachments",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tasks\/:task_id\/attachments",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/tasks\/:task_id\/attachments",
+                            "variable": [
+                                {
+                                    "id": "task_id",
+                                    "key": "task_id",
+                                    "value": "16",
+                                    "description": "The ID of the task."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Get all attachments for a task."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Upload Attachment",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tasks\/:task_id\/attachments",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/tasks\/:task_id\/attachments",
+                            "variable": [
+                                {
+                                    "id": "task_id",
+                                    "key": "task_id",
+                                    "value": "16",
+                                    "description": "The ID of the task."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "file",
+                                    "src": [],
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Download Attachment",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tasks\/:task_id\/attachments\/:attachment_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/tasks\/:task_id\/attachments\/:attachment_id",
+                            "variable": [
+                                {
+                                    "id": "task_id",
+                                    "key": "task_id",
+                                    "value": "16",
+                                    "description": "The ID of the task."
+                                },
+                                {
+                                    "id": "attachment_id",
+                                    "key": "attachment_id",
+                                    "value": "16",
+                                    "description": "The ID of the attachment."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete Attachment",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tasks\/:task_id\/attachments\/:attachment_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/tasks\/:task_id\/attachments\/:attachment_id",
+                            "variable": [
+                                {
+                                    "id": "task_id",
+                                    "key": "task_id",
+                                    "value": "16",
+                                    "description": "The ID of the task."
+                                },
+                                {
+                                    "id": "attachment_id",
+                                    "key": "attachment_id",
+                                    "value": "16",
+                                    "description": "The ID of the attachment."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "Authorization",
+                "type": "string"
+            }
+        ]
+    }
+}

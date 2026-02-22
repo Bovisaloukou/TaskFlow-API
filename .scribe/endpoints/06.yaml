@@ -1,0 +1,271 @@
+name: Comments
+description: |-
+
+  APIs for managing task comments
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/tasks/{task_id}/comments'
+    metadata:
+      custom: []
+      groupName: Comments
+      groupDescription: |-
+
+        APIs for managing task comments
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Comments'
+      description: 'Get all comments for a task.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      task_id:
+        custom: []
+        name: task_id
+        description: 'The ID of the task.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      task_id: 16
+    queryParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Items per page.'
+        required: false
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      per_page: 15
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/tasks/{task_id}/comments'
+    metadata:
+      custom: []
+      groupName: Comments
+      groupDescription: |-
+
+        APIs for managing task comments
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create Comment'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      task_id:
+        custom: []
+        name: task_id
+        description: 'The ID of the task.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      task_id: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      body:
+        custom: []
+        name: body
+        description: 'The comment body.'
+        required: true
+        example: 'This looks great!'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      body: 'This looks great!'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/v1/tasks/{task_id}/comments/{id}'
+    metadata:
+      custom: []
+      groupName: Comments
+      groupDescription: |-
+
+        APIs for managing task comments
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update Comment'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      task_id:
+        custom: []
+        name: task_id
+        description: 'The ID of the task.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the comment.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      task_id: 16
+      id: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      body:
+        custom: []
+        name: body
+        description: 'The updated comment body.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      body: architecto
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/tasks/{task_id}/comments/{id}'
+    metadata:
+      custom: []
+      groupName: Comments
+      groupDescription: |-
+
+        APIs for managing task comments
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete Comment'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      task_id:
+        custom: []
+        name: task_id
+        description: 'The ID of the task.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the comment.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      task_id: 16
+      id: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
