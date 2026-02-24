@@ -4,7 +4,7 @@ API RESTful multi-tenant de gestion de taches, construite avec Laravel 11.
 
 ## Stack technique
 
-- **PHP** 8.3
+- **PHP** 8.4+
 - **Laravel** 11
 - **MySQL** (MariaDB)
 - **Laravel Sanctum** - Authentification par tokens
