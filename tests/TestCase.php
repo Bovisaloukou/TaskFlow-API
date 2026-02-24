@@ -47,7 +47,7 @@ abstract class TestCase extends BaseTestCase
         return $admin;
     }
 
-    protected function actingAsOrgUser(Organization $organization = null, string $role = 'user', array $userAttributes = []): User
+    protected function actingAsOrgUser(?Organization $organization = null, string $role = 'user', array $userAttributes = []): User
     {
         if (! $organization) {
             $organization = Organization::create([
